@@ -1,0 +1,75 @@
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+}
+
+.App { 
+  width: 1400px; 
+  margin: 0 auto 
+}
+
+header, nav, footer {
+  height: 50px; 
+  line-height: 50px; 
+  text-align: center;
+}
+
+header {
+  border: 1px solid rgb(200,200,200); 
+  font-size: 1.25em; 
+  letter-spacing: 1em; 
+  font-weight: bold;
+}
+
+footer { 
+  border: 1px solid darkcyan; }
+
+aside { 
+  width: 150px; 
+  height: 300px; 
+  line-height: 200px; 
+  background-color: #bbb; 
+  text-align: center; 
+}
+
+nav { 
+  background-color: #212529;
+}
+
+nav>ul { 
+  list-style: none; 
+  overflow: hidden;
+}
+
+nav>ul>li { 
+  float:left; 
+  width:120px; 
+  background-color: #212529; 
+}
+
+nav>ul>li>a { 
+  text-decoration: none; 
+  color:#797c7f; 
+  font-weight: bold; 
+  display: block;
+}
+
+nav>ul>li>a:hover { 
+  color:white; 
+  background-color: #333;
+}
+
+main { 
+  display: flex;
+}
+
+section { 
+  width: 1100px; 
+  min-height: 1000px; 
+  padding: 20px; 
+}
+
+th {
+  text-align: center;
+}

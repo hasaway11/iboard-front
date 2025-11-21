@@ -1,0 +1,15 @@
+/*
+  - CSS Modules는 CSS 클래스명을 컴포넌트 스코프로 한정시켜 충돌을 방지하는 기법
+  - 클래스명 충돌 방지
+  - 타입 안정성 (자동완성)
+
+  - 여러 클래스 조합
+    <div className={`${styles.card} ${styles.active}`}>
+    또는
+    <div className={classNames(styles.card, styles.active)}>
+
+*/
+
+.paginations {
+  justify-content: center;
+}

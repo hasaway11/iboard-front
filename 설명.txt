@@ -1,0 +1,6 @@
+1. 의존성 설정
+- npm i react-bootstrap bootstrap
+- npm i axios
+- npm i zustand
+- npm i react-router-dom@latest
+

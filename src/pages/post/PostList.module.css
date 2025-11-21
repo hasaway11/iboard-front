@@ -1,0 +1,23 @@
+.pno {
+  width: 10%;
+  text-align: center;
+}
+
+.title {
+  width: 40%;
+}
+
+.writer {
+  width: 15%;
+  text-align: center;
+}
+
+.writeTime {
+  width: 30%;
+  text-align: center;
+}
+
+.readCnt {
+  width: 15%;
+  text-align: center;
+}
