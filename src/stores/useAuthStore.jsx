@@ -1,6 +1,5 @@
-import axios from "axios";
 import { create } from "zustand";
-import { baseURL } from "../utils/constant";
+import api from "../utils/api";
 
 const useAuthStore = create((set)=>{
   return {
@@ -8,7 +7,7 @@ const useAuthStore = create((set)=>{
     role: undefined,
 
     fetchAndStoreAuth:function() {
-      axios.get(baseURL + '/auth/check').then(res=>{
+      api.get('/api/auth/check').then(res=>{
         set({username:res.data.username, role:res.data.role});
       }).catch(err=>{
         if(err.status!==409)
@@ -17,7 +16,10 @@ const useAuthStore = create((set)=>{
       })
     },
 
-    setLogin: ({username, role}) => set({username, role}),
+    setLogin: (username, role) => {
+      console.log(username, role);
+      set({username, role})
+    },
 
     setLogout: () => set({username:null, role:null})
   }

@@ -18,10 +18,10 @@ const validationRules = {
 
 const validate=(name, value)=>{
   if(value==='')
-    return {validateResult:false, message:validationRules[name].emptyMessage};
+    return validationRules[name].emptyMessage;
   if(validationRules[name].pattern.test(value)===false)
-    return {validateResult:false, message:validationRules[name].patternMessage};
-  return {validateResult:true};
+    return validationRules[name].patternMessage;
+  return '';
 }
 
 export {validate}

@@ -1,6 +1,5 @@
-import axios from "axios";
 import { useState } from "react"
-import { baseURL } from "../../utils/constant";
+import api from "../../utils/api";
 
 function MemberFind() {
   const [email, setEmail] = useState("");
@@ -10,7 +9,7 @@ function MemberFind() {
   const onChange=(e)=>setEmail(e.target.value);
 
   const find=()=>{
-    axios.get(baseURL+`/members/username?email=${email}`).then(res=>{
+    api.get(`/members/username?email=${email}`).then(res=>{
       setFoundId(res.data);
       setSearchResult(1);
     }).catch(err=>{

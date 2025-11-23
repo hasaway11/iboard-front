@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, Table } from "react-bootstrap"
-import { Link } from 'react-router-dom';
-import styles from './Posts.module.css';
+import { Link, useSearchParams } from 'react-router-dom';
+import styles from './PostList.module.css';
 import Paginations from "../../components/Paginations";
+import LoadingSpinner from '../../components/LoadingSpinner';
+import api from "../../utils/api";
 
 function Post({post}) {
   const {pno, title, writer, writeTime, readCnt} = post;
+  
   return (
     <tr key={post.pno}>
       <td className={styles.pno}>{pno}</td>
@@ -20,13 +23,18 @@ function Post({post}) {
 }
 
 function PostList() {
+  const [params] = useSearchParams();
+  let pageno = Number(params.get('pageno'));
+  if (isNaN(pageno) || pageno < 1) 
+    pageno=1;
+
   const [data, setData] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(()=>{
     setLoading(true);
-    axios.get(baseURL + `/api/posts`).then(res=>{
+    api.get(`/api/posts?pageno=${pageno}`).then(res=>{
       setData(res.data);
       setLoading(false);
     }).catch(err=>{
@@ -56,7 +64,7 @@ function PostList() {
         }
         </tbody>
       </Table>
-      <Paginations pageno={pageno} prev={prev} start={start} end={end} next={next} />
+      <Paginations pageno={pageno} prev={data.prev} start={data.start} end={data.end} next={data.next} />
     </>
   )
 }

@@ -4,7 +4,7 @@ import useAuthStore from "../stores/useAuthStore";
 function PrivateRoute({ element }) {
   const username = useAuthStore();
 
-  // 로그인 확인이전이라면
+  // 로그인 확인 이전이라면
   if (username === undefined) 
     return; 
 

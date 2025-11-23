@@ -47,8 +47,8 @@ function App() {
             <Route path="/member/signup" element={<PublicRoute element={<MemberSignup />} />} />
             <Route path="/member/login" element={<PublicRoute element={<MemberLogin />} /> } />
             <Route path="/member/find-username" element={<PublicRoute element={<MemberFind />} /> } />
-            <Route path="/member/read" element={<PublicRoute element={<MemberRead />} /> } />
-            <Route path="/member/change-password" element={<PublicRoute element={<MemberChangePassword />} /> } />
+            <Route path="/member/read" element={<PrivateRoute element={<MemberRead />} /> } />
+            <Route path="/member/change-password" element={<PrivateRoute element={<MemberChangePassword />} /> } />
             <Route path="/e403" element={<E403 />} />
             <Route path="*" element={<E404 />} />
           </Routes>

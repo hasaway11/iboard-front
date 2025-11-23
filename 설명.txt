@@ -3,4 +3,5 @@
 - npm i axios
 - npm i zustand
 - npm i react-router-dom@latest
+- npm i react-quill-new
 

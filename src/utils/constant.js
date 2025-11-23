@@ -1,3 +1,7 @@
-const baseURL = "http://localhost:8080/api";
+const modules = {
+  toolbar: {
+    container: [['image'], [{ header: [1, 2, 3, 4, 5, false] }], ['bold', 'underline']]
+  }
+};
 
-export {baseURL}
+export {modules}

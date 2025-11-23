@@ -1,15 +1,14 @@
 import { useState } from "react"
 import { validate } from "../../utils/function";
-import {baseURL} from '../../utils/constant'
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../../utils/api";
 
 function MemberSignup() {
   const [inputs, setInputs] = useState({username:'', password:'', password2:'', email:''});
   const [messages, setMessages] = useState({username:'', password:'', password2:'', email:''});
 
   const navigate = useNavigate();
-  const failStyle = {color:'red', fontWeight:'0.8em'};
+  const failStyle = {color:'red', fontSize:'0.8em'};
 
   const onChange=(e)=>{
     const {name, value} = e.target;
@@ -17,21 +16,18 @@ function MemberSignup() {
   }
 
   const checkUsername=()=>{
-    const result = validate('username', inputs.username);
-    if(!result.validateResult)
-      setMessages(prev=>({...prev, username:result.message}));
+    const message = validate('username', inputs.username);
+    setMessages(prev=>({...prev, username:message}));
   }
 
   const checkPassword=()=>{
-    const result = validate('password', inputs.password);
-    if(!result.validateResult)
-      setMessages(prev=>({...prev, password:result.message}));
+    const message = validate('password', inputs.password);
+    setMessages(prev=>({...prev, password:message}));
   }
 
   const checkEmail=()=>{
-    const result = validate('email', inputs.email);
-    if(!result.validateResult)
-      setMessages(prev=>({...prev, email:result.message}));
+    const message = validate('email', inputs.email);
+    setMessages(prev=>({...prev, email:message}));
   }
 
   const checkPassword2=()=>{
@@ -39,6 +35,8 @@ function MemberSignup() {
       setMessages(prev=>({...prev, password2:'새 비밀번호를 입력하세요'}));
     else if(inputs.password2!==inputs.password)
       setMessages(prev=>({...prev, password2:'새 비밀번호가 일치하지 않습니다'}));
+    else
+      setMessages(prev=>({...prev, password2:''}));
   }
 
   const signUp=()=>{
@@ -52,7 +50,7 @@ function MemberSignup() {
       return;
     
     const params = {username:inputs.username, password:inputs.password, email:inputs.email};
-    axios.post(baseURL + "/members/new", new URLSearchParams(params)).then(()=>{
+    api.post("/api/members/new", new URLSearchParams(params)).then(()=>{
       alert("가입되었습니다");
       navigate("/member/login");
     }).catch(err=>{

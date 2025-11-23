@@ -1,14 +1,17 @@
-import axios from "axios";
-import { baseURL } from "../../utils/constant";
 import { useNavigate } from "react-router-dom";
+import api from "../../utils/api";
+import { useState } from "react";
+import { validate } from "../../utils/function";
+import useAuthStore from "../../stores/useAuthStore";
 
 
 function MemberChangePassword() {
   const [inputs, setInputs] = useState({currentPassword:'', newPassword:'', newPassword2:''});
   const [messages, setMessages] = useState({currentPassword:'', newPassword:'', newPassword2:''});
+  const {setLogout} = useAuthStore();
 
   const navigate = useNavigate();
-  const failStyle = {color:'red', fontWeight:'0.8em'};
+  const failStyle = {color:'red', fontSize:'0.8em'};
 
   const onChange=(e)=>{
     const {name, value} = e.target;
@@ -16,9 +19,8 @@ function MemberChangePassword() {
   }
 
   const checkPassword=(name)=>{
-    const result = validate('password', inputs[name]);
-    if(!result.validateResult)
-      setMessages(prev=>({...prev, [name]:result.message}));
+    const message = validate('password', inputs[name]);
+    setMessages(prev=>({...prev, [name]:message}));
   }
 
   const checkNewPassword2=()=>{
@@ -36,8 +38,11 @@ function MemberChangePassword() {
     if(!checkResult)
       return;
 
-    axios.patch(baseURL + "/members/password").then(()=>{
+    const params = {currentPassword:inputs.currentPassword, newPassword:inputs.newPassword};
+
+    api.patch("/api/members/password", new URLSearchParams(params)).then(()=>{
       alert("비밀번호를 변경했습니다. 다시 로그인하세요");
+      setLogout();
       navigate("/member/login");
     }).catch(err=>{
       alert("비밀번호를 변경할 수 없습니다");
@@ -48,17 +53,17 @@ function MemberChangePassword() {
     <>
       <div className="mb-3 mt-3">
         <label className="form-label">현재 비밀번호:</label>
-        <input type="password" className="form-control" onChange={onChange} onBlur={()=>checkPassword('currentPassword')}/>
+        <input type="password" className="form-control" onChange={onChange} onBlur={()=>checkPassword('currentPassword')} name="currentPassword"/>
         {messages.currentPassword!=='' && <span style={failStyle}>{messages.currentPassword}</span>}
       </div>
       <div className="mb-3 mt-3">
         <label className="form-label">새 비밀번호:</label>
-        <input type="password" className="form-control" onChange={onChange} onBlur={()=>checkPassword("newPassword")}/>
+        <input type="password" className="form-control" onChange={onChange} onBlur={()=>checkPassword("newPassword")} name="newPassword"/>
         {messages.newPassword!=='' && <span style={failStyle}>{messages.newPassword}</span>}
       </div>
       <div className="mb-3 mt-3">
         <label className="form-label">새 비밀번호 확인:</label>
-        <input type="password" className="form-control" onChange={onChange} onBlur={checkNewPassword2}/>
+        <input type="password" className="form-control" onChange={onChange} onBlur={checkNewPassword2} name="newPassword2"/>
         {messages.newPassword2!=='' && <span style={failStyle}>{messages.newPassword2}</span>}
       </div>
       <div className="mb-3 mt-3 d-grid">

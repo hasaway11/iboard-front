@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useAuthStore from "../../stores/useAuthStore"
+import api from "../../utils/api";
 
 function MemberLogin() {
   const [inputs, setInputs] = useState({username:'', password:''});
@@ -12,7 +13,8 @@ function MemberLogin() {
 
   const login=()=>{
     const params={username:inputs.username, password:inputs.password};
-    axios.post("http://localhost:8080/login").then(res=>{
+    api.post("/login", new URLSearchParams(params)).then(res=>{
+      console.log(res.data);
       setLogin(res.data.username, res.data.role);
     }).catch(err=>{
       console.log(err);
