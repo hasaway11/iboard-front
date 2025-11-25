@@ -2,7 +2,8 @@ import { Navigate } from "react-router-dom";
 import useAuthStore from "../stores/useAuthStore";
 
 function PrivateRoute({ element }) {
-  const username = useAuthStore();
+  const {username} = useAuthStore();
+  console.log(username);
 
   // 로그인 확인 이전이라면
   if (username === undefined) 

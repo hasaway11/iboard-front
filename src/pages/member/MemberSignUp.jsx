@@ -17,7 +17,14 @@ function MemberSignup() {
 
   const checkUsername=()=>{
     const message = validate('username', inputs.username);
-    setMessages(prev=>({...prev, username:message}));
+    if(message==='') {
+      api.get(`/api/members/check-username?username=${inputs.username}`).then(()=>setMessages(prev=>({...prev, username:''})))
+        .catch(err=>{
+          if(err.status===409)
+            setMessages(prev=>({...prev, username:"사용중인 아이디입니다"}));
+        })
+    } else
+      setMessages(prev=>({...prev, username:message}));
   }
 
   const checkPassword=()=>{

@@ -29,7 +29,7 @@ function PostRead() {
   useEffect(()=>{
     setLoading(true);
     api.get(`/api/posts/post?pno=${pno}`).then(res=>{
-      const {post, comments} = res.data;
+      const {comments, ...post} = res.data;
       setPost(post);
       setComments(comments);
       setLoading(false);
@@ -38,13 +38,6 @@ function PostRead() {
       setLoading(false);
     });
   }, []);
-
-  if(isLoading)
-    return <LoadingSpinner />
-  if (error)
-    return <Alert variant="danger">{String(error)}</Alert>;
-  if(post==null)
-    return null;
 
   // 3. 로그인 여부 및 작성자 여부를 나타내는 파생 상태(derived state). data가 필요하므로 guard 이후에 계산
   const isLogin = username!==undefined && username!==null;
@@ -66,7 +59,14 @@ function PostRead() {
     api.delete(`/api/comments?cno=${cno}&pno=${pno}`).then(res=>setComments(res.data)).catch(err=>console.log(err));
 	}
 
-   return (
+  if(isLoading)
+    return <LoadingSpinner />
+  if (error)
+    return <Alert variant="danger">{String(error)}</Alert>;
+  if(post==null)
+    return null;
+  
+  return (
     <div>
       <div className="read-title mb-2">{post.title}</div>
       <div className="mb-3" style={{display:'flex', justifyContent:'space-between'}}>

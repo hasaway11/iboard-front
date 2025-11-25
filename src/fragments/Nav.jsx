@@ -1,13 +1,14 @@
 import axios from "axios";
 import useAuthStore from "../stores/useAuthStore";
 import { Link } from "react-router-dom";
+import api from "../utils/api";
 
 function Nav() {
   const {role, setLogout} = useAuthStore();
 
   const doLogout=(e)=>{
     e.preventDefault();
-    axios.post('http://localhost:8080/logout').then(()=>setLogout()).catch(err=>console.log(err));
+    api.post('http://localhost:8080/logout').then(()=>setLogout()).catch(err=>console.log(err));
   }
 
   if(!role) {
