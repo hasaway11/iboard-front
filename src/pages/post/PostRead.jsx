@@ -1,4 +1,4 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import useAuthStore from "../../stores/useAuthStore"
 import { useEffect, useRef, useState } from "react";
 import CommentWrite from "../../components/CommentWrite";
@@ -21,10 +21,10 @@ function PostRead() {
 
   // 2. pno 파라미터를 읽어온다
   //    Number(params.get('pno'))는 pno가 null이면 0, 숫자가 아난 경우 NaN
-  const [params] = useSearchParams();
-  const pno = Number(params.get('pno'));
-  if (isNaN(pno) || pno < 1) 
-    navigate("/");
+  const [searchParams] = useSearchParams();
+  const pno = searchParams.get('pno');
+  if(pno==null)
+    return <Navigate to="/"/>
 
   useEffect(()=>{
     setLoading(true);
@@ -87,7 +87,7 @@ function PostRead() {
       {
         isWriter &&
         <div className='mt-3 mb-3'>
-          <button className="btn btn-success me-3" onClick={()=>navigate(`/post/update?pno=${pno}`)} >변경으로</button>
+          <button className="btn btn-success me-3" onClick={()=>navigate(`/post/update?pno=${pno}`)} >업데이트로</button>
           <button className="btn btn-danger" onClick={deletePost}>삭제하기</button>
         </div>
       }
