@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Alert, Table } from "react-bootstrap"
 import { Link, useSearchParams } from 'react-router-dom';
-import styles from './PostList.module.css';
+import './PostList.css';
 import Paginations from "../../components/Paginations";
 import LoadingSpinner from '../../components/LoadingSpinner';
 import api from "../../utils/api";
@@ -11,22 +11,20 @@ function Post({post}) {
   
   return (
     <tr key={post.pno}>
-      <td className={styles.pno}>{pno}</td>
-      <td className={styles.title}>
+      <td className='pno'>{pno}</td>
+      <td className='title'>
         <Link to={`/post/read?pno=${post.pno}`}>{title}</Link>
       </td>
-      <td className={styles.writer}>{writer}</td>
-      <td className={styles.writeTime}>{writeTime}</td>
-      <td className={styles.readCnt}>{readCnt}</td>
+      <td className='writer'>{writer}</td>
+      <td className='writeTime'>{writeTime}</td>
+      <td className='readCnt'>{readCnt}</td>
     </tr>
   )
 }
 
 function PostList() {
-  const [params] = useSearchParams();
-  let pageno = Number(params.get('pageno'));
-  if (isNaN(pageno) || pageno < 1) 
-    pageno=1;
+  const [searchParams] = useSearchParams();
+  let pageno = searchParams.get('pageno')==null? 1 : searchParams.get('pageno');
 
   const [data, setData] = useState(null);
   const [isLoading, setLoading] = useState(false);
